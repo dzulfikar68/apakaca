@@ -3,9 +3,17 @@ html,body {
 }
 .hero.is-info {
   background: linear-gradient(
+    rgba(163, 163, 163, 0.568),
+    rgba(255, 255, 255, 0.753)
+  ), 
+  /* url("../images/background.jpg")  */
+  url('https://unsplash.it/1200/900?random')
+  no-repeat center center fixed;
+  /* background: linear-gradient(
       rgb(255, 255, 255),
       rgb(255, 255, 255)
-    ), url('https://unsplash.it/1200/900?random') no-repeat center center fixed;
+    ), url('https://unsplash.it/1200/900?random'); */
+    /* no-repeat center center fixed; */
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
