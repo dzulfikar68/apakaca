@@ -6,8 +6,8 @@ html,body {
     rgba(163, 163, 163, 0.568),
     rgba(255, 255, 255, 0.753)
   ), 
-  /* url("../images/background.jpg")  */
-  url('https://unsplash.it/1200/900?random')
+  url("../images/background.jpg") 
+  /* url('https://unsplash.it/1200/900?random') */
   no-repeat center center fixed;
   /* background: linear-gradient(
       rgb(255, 255, 255),
