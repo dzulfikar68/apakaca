@@ -3,8 +3,8 @@ html,body {
 }
 .hero.is-info {
   background: linear-gradient(
-    rgba(163, 163, 163, 0.568),
-    rgba(255, 255, 255, 0.753)
+    #dd9f6fcb,
+    #603f267e
   ), 
   url("../images/background.jpg") 
   /* url('https://unsplash.it/1200/900?random') */

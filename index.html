@@ -9,12 +9,19 @@
     <link rel="shortcut icon" href="images/fav_icon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <!-- Bulma Version 1-->
     <link rel="stylesheet" href="https://unpkg.com/bulma@1.0.0/css/bulma.min.css" />
     <link rel="stylesheet" type="text/css" href="css/landing.css">
+    <style>
+        .modal-card-foot {
+            display: flex;
+            justify-content: flex-end; /* Mengatur tombol ke kanan */
+        }
+    </style>
 </head>
 
-<body>
+<body onload="fetchList();">
     <section class="hero is-info is-fullheight">
         <div class="hero-head">
             <nav class="navbar">
@@ -73,10 +80,10 @@
                 <div class="container has-text-centered">
                     <div class="column is-6 is-offset-3">
                         <h1 class="title">
-                            Coming Soon
+                            Apa Kabar Cuaca
                         </h1>
                         <h2 class="subtitle">
-                            $this is the best software platform for running an internet business. We handle billions of dollars every year for forward-thinking businesses around the world.
+                            Ini adalah aplikasi sederhana tentang info cuaca dan gempa bumi di Indonesia. Silahkan cari info dalam bentuk nama kecamatan, kota, atau provinsi.
                         </h2>
                         <div class="box">
                             <div class="field is-grouped">
@@ -94,9 +101,9 @@
                             <div class="cell">
                                 <div class="card"> 
                                     <div class="card-content"> 
-                                        <p><span>Kecamatan:</span> X</p> 
-                                        <p><span>Kota:</span> Y</p> 
-                                        <p><span>Provinsi:</span> Z</p> 
+                                        <p><span>Kecamatan:</span> ???</p> 
+                                        <p><span>Kota:</span> ???</p> 
+                                        <p><span>Provinsi:</span> ???</p> 
                                     </div> 
                                 </div> 
                             </div>
@@ -132,20 +139,42 @@
                 </div>
             </div>
 
+            <!-- Modal -->
+            <div class="modal" id="myModal">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head">
+                    <p class="modal-card-title">Modal Title</p>
+                    <button class="delete" aria-label="close" id="closeModal"></button>
+                    </header>
+                    <section class="modal-card-body">
+                    <!-- Konten modal -->
+                    Ini adalah konten modal.
+                    <div id="map" style="height: 500px;"></div>
+                    </section>
+                    <footer class="modal-card-foot">
+                    <!-- <button class="button is-success">Save changes</button> -->
+                    <button class="button is-pulled-right" id="closeModalFooter">Cancel</button>
+                    </footer>
+                </div>
+            </div>
+
     </section>
     <script async type="text/javascript" src="js/bulma.js"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script> -->
     <script async type="text/javascript" src="js/jquery-3.7.1.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script type="text/javascript">
 
         var listMaster = []
+        var map = null
+        var markersGroup = null
 
         function showList(list) {
             $("#list-city").empty()
             list.forEach(e => {
                     var itemView = `
                     <div class="cell">
-                        <div class="card"> 
+                        <div class="card" style="cursor: pointer;" onclick="openModalForItem(${e.id})"> 
                             <div class="card-content" style="text-align: center;"> 
                                 <p><span>Sub:</span> <b>${e.kecamatan}</b></p> 
                                 <p><span>Dist:</span> <b>${e.kota}</b></p> 
@@ -174,43 +203,147 @@
             });
         }
 
-        $( document ).ready(function() {
+         function showWeather(xml) {
+            $xml = $(xml)
+
+            // Mengambil data dari XML
+            var timestamp = $xml.find('timestamp').text();
+            var areaDescription = $xml.find('area').attr('description');
+
+            // Mengambil nilai kelembapan
+            var humidityValues = $xml.find('parameter[id="hu"] timerange value');
+
+            // Mengambil nilai suhu
+            var temperatureValues = $xml.find('parameter[id="t"] timerange');
+
+            // Menampilkan data yang diambil
+            console.log("Timestamp: " + timestamp);
+            console.log("Area Description: " + areaDescription);
+
+            // Menampilkan kelembapan
+            console.log("Humidity Values:");
+            humidityValues.each(function(index) {
+            var hour = $(this).parent().attr('h');
+            var value = $(this).text();
+            console.log("  Hour " + hour + ": " + value + "%");
+            });
+
+            // Menampilkan suhu
+            console.log("Temperature Values:");
+            temperatureValues.each(function(index) {
+            var hour = $(this).attr('h');
+            var celsius = $(this).find('value[unit="C"]').text();
+            var fahrenheit = $(this).find('value[unit="F"]').text();
+            console.log("  Hour " + hour + ": " + celsius + "°C / " + fahrenheit + "°F");
+            });
+         }
+
+        function openModalForItem(id) {
+            var item = listMaster.find(item => item.id === id.toString());
+            // alert(item.kota)
+
+            showMap(item)
+        }
+
+        function showMap(item) {
+            markersGroup.clearLayers();
+
+            // Koordinat longitude dan latitude
+            var latitude = Number(item.lat);
+            var longitude = Number(item.lon);
+
+            // Tambahkan marker pada koordinat tertentu
+            var marker = L.marker([latitude, longitude]).addTo(map)
+
+            // Tambahkan beberapa marker ke dalam group
+            marker.addTo(markersGroup);
+
+            marker.bindPopup(`Lokasi Koordinat: ${item.kecamatan}`)
+                .openPopup();
+
+            map.setView(marker.getLatLng(), 15);
+
+            $('#myModal').addClass('is-active'); // Tambahkan class is-active ke modal
+        }
+
+        function setFirstMap() {
+            // Koordinat longitude dan latitude
+            var latitude = -6.200000;
+            var longitude = 106.816666;
+
+            // Inisialisasi peta dan atur view-nya ke koordinat yang diinginkan
+            map = L.map('map').setView([latitude, longitude], 13); // angka 13 adalah level zoom
+            markersGroup = L.layerGroup().addTo(map);
+
+            // Atur tiles OpenStreetMap sebagai peta dasar
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Tambahkan marker pada koordinat tertentu
+            var marker = L.marker([latitude, longitude]).addTo(map)
+
+            marker.addTo(markersGroup);
+
+            marker.bindPopup(`Lokasi Koordinat: DKI Jakarta`)
+                .openPopup();
+        }
+
+        $(document).ready(function() {
             console.log( "ready!" );
-            fetchList()
+            // fetchList()
+
+            $("#input-search").on('input', function() { 
+                var input = $(this).val()
+                console.log(input)
+                let filtered = listMaster.filter(function(item){
+                    let sub = item.kecamatan.toLowerCase()
+                    let dist = item.kota.toLowerCase()
+                    let prov = item.propinsi.toLowerCase()
+                    let query = input.toLowerCase()
+                    return sub.includes(query) || dist.includes(query) || prov.includes(query)
+                })
+                console.log(filtered)
+                showList(filtered)
+            });
+
+            setFirstMap()
+
+            // Fungsi untuk menutup modal (tombol close dan background)
+            $('#closeModal, #closeModalFooter, .modal-background').click(function() {
+                $('#myModal').removeClass('is-active'); // Hapus class is-active dari modal
+            });
+
+            $.get("https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/DigitalForecast-dkijakarta.xml")
+            .done(function(data, status, res){
+                    console.log(status)
+                    console.log(data)
+                    const timestamp = data.getElementsByTagName("timestamp")[0].textContent;
+                    console.log(timestamp)
+                    showWeather(data)
+                })
+            .fail(function(data, status){
+                    console.log(status)
+                    console.log(data)
+                });
+
+            
+
+            // $('.card').on('click', function() {
+            //     // Ambil data dari elemen yang di-klik
+            //     var kecamatan = $(this).find('b').eq(0).text(); // Ambil kecamatan
+            //     var kota = $(this).find('b').eq(1).text(); // Ambil kota
+            //     var propinsi = $(this).find('b').eq(2).text(); // Ambil provinsi
+                
+            //     // Tampilkan data di console atau bisa melakukan aksi lainnya
+            //     console.log('Kecamatan:', kecamatan);
+            //     console.log('Kota:', kota);
+            //     console.log('Provinsi:', propinsi);
+                
+            //     // Misalnya, tampilkan dalam alert (opsional)
+            //     alert("Kecamatan: " + kecamatan + "\nKota: " + kota + "\nProvinsi: " + propinsi);
+            // });
         });
-
-        $("#input-search").on('input', function() { 
-            var input = $(this).val()
-            console.log(input)
-            let filtered = listMaster.filter(function(item){
-                let sub = item.kecamatan.toLowerCase()
-                let dist = item.kota.toLowerCase()
-                let prov = item.propinsi.toLowerCase()
-                let query = input.toLowerCase()
-                return sub.includes(query) || dist.includes(query) || prov.includes(query)
-            })
-            console.log(filtered)
-            showList(filtered)
-         });
-
-        // id
-        // : 
-        // "501397"
-        // kecamatan
-        // : 
-        // "Banda Aceh"
-        // kota
-        // : 
-        // "Kota Banda Aceh"
-        // lat
-        // : 
-        // "5.544910"
-        // lon
-        // : 
-        // "95.343120"
-        // propinsi
-        // : 
-        // "Aceh"
 
     </script>
 </body>
