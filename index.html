@@ -144,17 +144,93 @@
                 <div class="modal-background"></div>
                 <div class="modal-card">
                     <header class="modal-card-head">
-                    <p class="modal-card-title">Modal Title</p>
-                    <button class="delete" aria-label="close" id="closeModal"></button>
+                        <p class="modal-card-title">Modal Title</p>
+                        <button class="delete" aria-label="close" id="closeModal"></button>
                     </header>
                     <section class="modal-card-body">
-                    <!-- Konten modal -->
-                    Ini adalah konten modal.
-                    <div id="map" style="height: 500px;"></div>
+                        <!-- Konten modal -->
+                        <div class="container mb-5">
+                            <div class="columns is-multiline">
+                                <!-- Cuaca Kota 1 -->
+                                <div class="column is-one-third">
+                                    <div class="card weather-card">
+                                    <div class="card-content has-text-centered">
+                                        <h3 class="title is-4">Jakarta</h3>
+                                        <figure class="image is-128x128 is-inline-block">
+                                        <img class="weather-icon" src="https://openweathermap.org/img/wn/01d@2x.png" alt="Sunny">
+                                        </figure>
+                                        <p class="temp">30°C</p>
+                                        <p class="weather-info">Cerah</p>
+                                    </div>
+                                    </div>
+                                </div>
+                        
+                                <!-- Cuaca Kota 2 -->
+                                <div class="column is-one-third">
+                                    <div class="card weather-card">
+                                    <div class="card-content has-text-centered">
+                                        <h3 class="title is-4">Bandung</h3>
+                                        <figure class="image is-128x128 is-inline-block">
+                                        <img class="weather-icon" src="https://openweathermap.org/img/wn/03d@2x.png" alt="Cloudy">
+                                        </figure>
+                                        <p class="temp">24°C</p>
+                                        <p class="weather-info">Berawan</p>
+                                    </div>
+                                    </div>
+                                </div>
+                        
+                                <!-- Cuaca Kota 3 -->
+                                <div class="column is-one-third">
+                                    <div class="card weather-card">
+                                    <div class="card-content has-text-centered">
+                                        <h3 class="title is-4">Surabaya</h3>
+                                        <figure class="image is-128x128 is-inline-block">
+                                        <img class="weather-icon" src="https://openweathermap.org/img/wn/09d@2x.png" alt="Rainy">
+                                        </figure>
+                                        <p class="temp">27°C</p>
+                                        <p class="weather-info">Hujan</p>
+                                    </div>
+                                    </div>
+                                </div>
+                        
+                                <!-- Cuaca Kota 4 -->
+                                <div class="column is-one-third">
+                                    <div class="card weather-card">
+                                    <div class="card-content has-text-centered">
+                                        <h3 class="title is-4">Yogyakarta</h3>
+                                        <figure class="image is-128x128 is-inline-block">
+                                        <img class="weather-icon" src="https://openweathermap.org/img/wn/02d@2x.png" alt="Partly Cloudy">
+                                        </figure>
+                                        <p class="temp">28°C</p>
+                                        <p class="weather-info">Sebagian Berawan</p>
+                                    </div>
+                                    </div>
+                                </div>
+                        
+                                <!-- Cuaca Kota 5 -->
+                                <div class="column is-one-third">
+                                    <div class="card weather-card">
+                                    <div class="card-content has-text-centered">
+                                        <h3 class="title is-4">Bali</h3>
+                                        <figure class="image is-128x128 is-inline-block">
+                                        <img class="weather-icon" src="https://openweathermap.org/img/wn/10d@2x.png" alt="Light Rain">
+                                        </figure>
+                                        <p class="temp">26°C</p>
+                                        <p class="weather-info">Gerimis</p>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="container">
+                            <div class="row is-multiline">
+                                <div id="map" style="height: 500px;"></div>
+                            </div>
+                        </div>
                     </section>
                     <footer class="modal-card-foot">
-                    <!-- <button class="button is-success">Save changes</button> -->
-                    <button class="button is-pulled-right" id="closeModalFooter">Cancel</button>
+                        <!-- <button class="button is-success">Save changes</button> -->
+                        <button class="button is-pulled-right" id="closeModalFooter">Cancel</button>
                     </footer>
                 </div>
             </div>
@@ -163,6 +239,7 @@
     <script async type="text/javascript" src="js/bulma.js"></script>
     <script async type="text/javascript" src="js/jquery-3.7.1.js"></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xml-js@1.6.11/dist/xml-js.min.js"></script>
     <script type="text/javascript">
 
         var listMaster = []
@@ -203,7 +280,36 @@
             });
         }
 
-         function showWeather(xml) {
+        function showWeatherV2(textJson) {
+            // var data = json.data
+            // console.log(data)
+            var jsonData = JSON.parse(textJson)
+            var area = jsonData.data.forecast.area
+            var city = area.find(e => e._attributes.id == '501195')
+            console.log(area)
+            console.log(city)
+            var weather = city.parameter.find(e => e._attributes.id == "weather").timerange.map(e => 
+                {
+                    return {
+                        datetime: e._attributes.datetime,
+                        weather: e.value._text,
+                    }
+                }
+            )
+            var temp = city.parameter.find(e => e._attributes.id == "t").timerange.map(e => 
+                {
+                    var value = e.value[0]
+                    return {
+                        datetime: e._attributes.datetime,
+                        temp: value._text + "°" + value._attributes.unit,
+                    }
+                }
+            )
+            console.log(weather)
+            console.log(temp)
+        }
+
+        function showWeather(xml) {
             $xml = $(xml)
 
             // Mengambil data dari XML
@@ -318,9 +424,19 @@
             .done(function(data, status, res){
                     console.log(status)
                     console.log(data)
-                    const timestamp = data.getElementsByTagName("timestamp")[0].textContent;
-                    console.log(timestamp)
-                    showWeather(data)
+
+                    // V1
+                    // const timestamp = data.getElementsByTagName("timestamp")[0].textContent;
+                    // console.log(timestamp)
+                    // showWeather(data)
+
+                    // V2
+                    // Convert XML to JSON using xml-js
+                    const serializer = new XMLSerializer();
+                    const xmlToString = serializer.serializeToString(data);
+                    var result = xml2json(xmlToString, {compact: true, spaces: 2});
+                    // console.log(result);
+                    showWeatherV2(result)
                 })
             .fail(function(data, status){
                     console.log(status)
