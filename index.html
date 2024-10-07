@@ -18,10 +18,13 @@
             display: flex;
             justify-content: flex-end; /* Mengatur tombol ke kanan */
         }
+        .mt-minus-50 {
+            margin-top: -50px;
+        }
     </style>
 </head>
 
-<body onload="fetchList();">
+<body onload="firstSetup();">
     <section class="hero is-info is-fullheight">
         <div class="hero-head">
             <nav class="navbar">
@@ -38,28 +41,28 @@
                     </div>
                     <div id="navbarMenu" class="navbar-menu">
                         <div class="navbar-end">
-                            <span class="navbar-item">
+                            <!-- <span class="navbar-item">
                                 <a class="button is-white is-outlined" href="#">
                                     <span class="icon">
                                         <i class="fa fa-home"></i>
                                     </span>
                                     <span>Home</span>
                                 </a>
-                            </span>
-                            <span class="navbar-item">
+                            </span> -->
+                            <!-- <span class="navbar-item">
                                 <a class="button is-white is-outlined" href="#">
                                     <span class="icon">
                                         <i class="fa fa-superpowers"></i>
                                     </span>
-                                    <span>Examples</span>
+                                    <span>Gempa Bumi</span>
                                 </a>
-                            </span>
+                            </span> -->
                             <span class="navbar-item">
                                 <a class="button is-white is-outlined" href="#">
                                     <span class="icon">
-                                        <i class="fa fa-book"></i>
+                                        <i class="fa fa-info-circle"></i>
                                     </span>
-                                    <span>Documentation</span>
+                                    <span>Tentang</span>
                                 </a>
                             </span>
                             <span class="navbar-item">
@@ -67,7 +70,7 @@
                                     <span class="icon">
                                         <i class="fa fa-github"></i>
                                     </span>
-                                    <span>View Source</span>
+                                    <span>Kode Sumber</span>
                                 </a>
                             </span>
                         </div>
@@ -83,12 +86,26 @@
                             Apa Kabar Cuaca
                         </h1>
                         <h2 class="subtitle">
-                            Ini adalah aplikasi sederhana tentang info cuaca dan gempa bumi di Indonesia. Silahkan cari info dalam bentuk nama kecamatan, kota, atau provinsi.
+                            Ini adalah aplikasi sederhana tentang info cuaca dan gempa bumi di Indonesia. Silahkan cari info dalam bentuk nama kecamatan, kota, atau provinsi yang ada di Indonesia.
                         </h2>
+                        <div class="column mt-minus-50 mb-3">
+                            <a class="button is-black is-outlined" href="#">
+                                <span class="icon">
+                                    <i class="fa fa-map-marker"></i>
+                                </span>
+                                <span>Cuaca Disini</span>
+                            </a>
+                            <a class="button is-black is-outlined" href="#">
+                                <span class="icon">
+                                    <i class="fa fa-globe"></i>
+                                </span>
+                                <span>Gempa Bumi</span>
+                            </a>
+                        </div>
                         <div class="box">
                             <div class="field is-grouped">
                                 <p class="control is-expanded">
-                                    <input id="input-search" class="input" type="text" placeholder="Enter your email">
+                                    <input id="input-search" class="input" type="text" placeholder="Cari nama kecamatan, kota, atau provinsi">
                                 </p>
                                 <!-- <p class="control">
                                     <a class="button is-info">
@@ -144,15 +161,15 @@
                 <div class="modal-background"></div>
                 <div class="modal-card">
                     <header class="modal-card-head">
-                        <p class="modal-card-title">Modal Title</p>
-                        <button class="delete" aria-label="close" id="closeModal"></button>
+                        <p id="title-modal" class="modal-card-title">Modal Title</p>
+                        <!-- <button class="delete" aria-label="close" id="closeModal"></button> -->
                     </header>
                     <section class="modal-card-body">
                         <!-- Konten modal -->
                         <div class="container mb-5">
-                            <div class="columns is-multiline">
+                            <div id="list-card-weather" class="columns is-multiline">
                                 <!-- Cuaca Kota 1 -->
-                                <div class="column is-one-third">
+                                <!-- <div class="column is-one-third">
                                     <div class="card weather-card">
                                     <div class="card-content has-text-centered">
                                         <h3 class="title is-4">Jakarta</h3>
@@ -163,10 +180,10 @@
                                         <p class="weather-info">Cerah</p>
                                     </div>
                                     </div>
-                                </div>
+                                </div> -->
                         
                                 <!-- Cuaca Kota 2 -->
-                                <div class="column is-one-third">
+                                <!-- <div class="column is-one-third">
                                     <div class="card weather-card">
                                     <div class="card-content has-text-centered">
                                         <h3 class="title is-4">Bandung</h3>
@@ -177,10 +194,10 @@
                                         <p class="weather-info">Berawan</p>
                                     </div>
                                     </div>
-                                </div>
+                                </div> -->
                         
                                 <!-- Cuaca Kota 3 -->
-                                <div class="column is-one-third">
+                                <!-- <div class="column is-one-third">
                                     <div class="card weather-card">
                                     <div class="card-content has-text-centered">
                                         <h3 class="title is-4">Surabaya</h3>
@@ -191,10 +208,10 @@
                                         <p class="weather-info">Hujan</p>
                                     </div>
                                     </div>
-                                </div>
+                                </div> -->
                         
                                 <!-- Cuaca Kota 4 -->
-                                <div class="column is-one-third">
+                                <!-- <div class="column is-one-third">
                                     <div class="card weather-card">
                                     <div class="card-content has-text-centered">
                                         <h3 class="title is-4">Yogyakarta</h3>
@@ -206,9 +223,9 @@
                                     </div>
                                     </div>
                                 </div>
-                        
+                         -->
                                 <!-- Cuaca Kota 5 -->
-                                <div class="column is-one-third">
+                                <!-- <div class="column is-one-third">
                                     <div class="card weather-card">
                                     <div class="card-content has-text-centered">
                                         <h3 class="title is-4">Bali</h3>
@@ -219,7 +236,7 @@
                                         <p class="weather-info">Gerimis</p>
                                     </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div> 
                         <div class="container">
@@ -240,11 +257,86 @@
     <script async type="text/javascript" src="js/jquery-3.7.1.js"></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/xml-js@1.6.11/dist/xml-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/id.min.js"></script>
     <script type="text/javascript">
 
         var listMaster = []
         var map = null
         var markersGroup = null
+        const weatherInfos = [
+            {
+                id: "0",
+                name: "Cerah",
+            },
+            {
+                id: "1",
+                name: "Cerah Berawan",
+            },
+            {
+                id: "2",
+                name: "Cerah Berawan",
+            },
+            {
+                id: "3",
+                name: "Berawan",
+            },
+            {
+                id: "4",
+                name: "Berawan Tebal",
+            },
+            {
+                id: "5",
+                name: "Udara Kabur",
+            },
+            {
+                id: "10",
+                name: "Asap",
+            },
+            {
+                id: "45",
+                name: "Kabut",
+            },
+            {
+                id: "60",
+                name: "Hujan Ringan",
+            },
+            {
+                id: "61",
+                name: "Hujan Sedang",
+            },
+            {
+                id: "63",
+                name: "Hujan Lebat",
+            },
+            {
+                id: "80",
+                name: "Hujan Lokal",
+            },
+            {
+                id: "95",
+                name: "Hujan Petir",
+            },
+            {
+                id: "97",
+                name: "Hujan Petir",
+            },
+        ]
+
+// 0 : Cerah / Clear Skies
+// 1 : Cerah Berawan / Partly Cloudy
+// 2 : Cerah Berawan / Partly Cloudy
+// 3 : Berawan / Mostly Cloudy
+// 4 : Berawan Tebal / Overcast
+// 5 : Udara Kabur / Haze
+// 10 : Asap / Smoke
+// 45 : Kabut / Fog
+// 60 : Hujan Ringan / Light Rain
+// 61 : Hujan Sedang / Rain
+// 63 : Hujan Lebat / Heavy Rain
+// 80 : Hujan Lokal / Isolated Shower
+// 95 : Hujan Petir / Severe Thunderstorm
+// 97 : Hujan Petir / Severe Thunderstorm
 
         function showList(list) {
             $("#list-city").empty()
@@ -280,6 +372,54 @@
             });
         }
 
+        function firstSetup() {
+            initListener()
+            fetchList()
+        }
+
+        function initListener() {
+            $(document).ready(function() {
+                console.log( "ready!" );
+                // fetchList()
+
+                $("#input-search").on('input', function() { 
+                    var input = $(this).val()
+                    console.log(input)
+                    let filtered = listMaster.filter(function(item){
+                        let sub = item.kecamatan.toLowerCase()
+                        let dist = item.kota.toLowerCase()
+                        let prov = item.propinsi.toLowerCase()
+                        let query = input.toLowerCase()
+                        return sub.includes(query) || dist.includes(query) || prov.includes(query)
+                    })
+                    console.log(filtered)
+                    showList(filtered)
+                });
+
+                setFirstMap()
+
+                // Fungsi untuk menutup modal (tombol close dan background)
+                $('#closeModal, #closeModalFooter, .modal-background').click(function() {
+                    $('#myModal').removeClass('is-active'); // Hapus class is-active dari modal
+                });
+
+                // $('.card').on('click', function() {
+                //     // Ambil data dari elemen yang di-klik
+                //     var kecamatan = $(this).find('b').eq(0).text(); // Ambil kecamatan
+                //     var kota = $(this).find('b').eq(1).text(); // Ambil kota
+                //     var propinsi = $(this).find('b').eq(2).text(); // Ambil provinsi
+                    
+                //     // Tampilkan data di console atau bisa melakukan aksi lainnya
+                //     console.log('Kecamatan:', kecamatan);
+                //     console.log('Kota:', kota);
+                //     console.log('Provinsi:', propinsi);
+                    
+                //     // Misalnya, tampilkan dalam alert (opsional)
+                //     alert("Kecamatan: " + kecamatan + "\nKota: " + kota + "\nProvinsi: " + propinsi);
+                // });
+            });
+        }
+
         function showWeatherV2(textJson) {
             // var data = json.data
             // console.log(data)
@@ -307,6 +447,38 @@
             )
             console.log(weather)
             console.log(temp)
+
+            // Merging both arrays
+            const mergedList = weather.map((item, index) => {
+                return { ...item, ...temp[index] };
+            });
+            console.log(mergedList)
+
+            // Set locale to Indonesian
+            moment.locale('id');
+
+            mergedList.forEach(e => {
+                    // Example input date string in "YYYYMMDDHHmmss" format
+                    const dateStr = e.datetime;
+                    const w = weatherInfos.find(x => x.id == e.weather).name
+                    // Parse and format the date
+                    const formattedDate = moment(dateStr, "YYYYMMDDHHmmss").format("ddd, D MMM YYYY HH:mm");
+                    var itemView = `
+                    <div class="column is-one-third">
+                        <div class="card weather-card">
+                        <div class="card-content has-text-centered">
+                            <h4 class="title is-5">${formattedDate}</h4>
+                            <figure class="image is-128x128 is-inline-block">
+                            <img class="weather-icon" src="https://ibnux.github.io/BMKG-importer/icon/${e.weather}.png" alt="Sunny">
+                            </figure>
+                            <p class="temp">${e.temp}</p>
+                            <h4 class="weather-info"><b>${w}</b></h4>
+                        </div>
+                        </div>
+                    </div>
+                    `
+                    $("#list-card-weather").append(itemView)
+                });
         }
 
         function showWeather(xml) {
@@ -347,8 +519,38 @@
         function openModalForItem(id) {
             var item = listMaster.find(item => item.id === id.toString());
             // alert(item.kota)
+            console.log(item)
+            var title = `Prediksi Cuaca: ${item.kecamatan}, ${item.kota}, ${item.propinsi}`
+            $("#title-modal").text(title)
 
+            getWeather()
             showMap(item)
+        }
+
+        function getWeather() {
+            $.get("https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/DigitalForecast-dkijakarta.xml")
+            .done(function(data, status, res){
+                    console.log(status)
+                    console.log(data)
+
+                    // V1
+                    // const timestamp = data.getElementsByTagName("timestamp")[0].textContent;
+                    // console.log(timestamp)
+                    // showWeather(data)
+
+                    // V2
+                    // Convert XML to JSON using xml-js
+                    const serializer = new XMLSerializer();
+                    const xmlToString = serializer.serializeToString(data);
+                    var result = xml2json(xmlToString, {compact: true, spaces: 2});
+                    // console.log(result);
+                    showWeatherV2(result)
+                })
+            .fail(function(data, status){
+                    console.log(status)
+                    console.log(data)
+                    alert(status)
+                });
         }
 
         function showMap(item) {
@@ -394,72 +596,6 @@
             marker.bindPopup(`Lokasi Koordinat: DKI Jakarta`)
                 .openPopup();
         }
-
-        $(document).ready(function() {
-            console.log( "ready!" );
-            // fetchList()
-
-            $("#input-search").on('input', function() { 
-                var input = $(this).val()
-                console.log(input)
-                let filtered = listMaster.filter(function(item){
-                    let sub = item.kecamatan.toLowerCase()
-                    let dist = item.kota.toLowerCase()
-                    let prov = item.propinsi.toLowerCase()
-                    let query = input.toLowerCase()
-                    return sub.includes(query) || dist.includes(query) || prov.includes(query)
-                })
-                console.log(filtered)
-                showList(filtered)
-            });
-
-            setFirstMap()
-
-            // Fungsi untuk menutup modal (tombol close dan background)
-            $('#closeModal, #closeModalFooter, .modal-background').click(function() {
-                $('#myModal').removeClass('is-active'); // Hapus class is-active dari modal
-            });
-
-            $.get("https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/DigitalForecast-dkijakarta.xml")
-            .done(function(data, status, res){
-                    console.log(status)
-                    console.log(data)
-
-                    // V1
-                    // const timestamp = data.getElementsByTagName("timestamp")[0].textContent;
-                    // console.log(timestamp)
-                    // showWeather(data)
-
-                    // V2
-                    // Convert XML to JSON using xml-js
-                    const serializer = new XMLSerializer();
-                    const xmlToString = serializer.serializeToString(data);
-                    var result = xml2json(xmlToString, {compact: true, spaces: 2});
-                    // console.log(result);
-                    showWeatherV2(result)
-                })
-            .fail(function(data, status){
-                    console.log(status)
-                    console.log(data)
-                });
-
-            
-
-            // $('.card').on('click', function() {
-            //     // Ambil data dari elemen yang di-klik
-            //     var kecamatan = $(this).find('b').eq(0).text(); // Ambil kecamatan
-            //     var kota = $(this).find('b').eq(1).text(); // Ambil kota
-            //     var propinsi = $(this).find('b').eq(2).text(); // Ambil provinsi
-                
-            //     // Tampilkan data di console atau bisa melakukan aksi lainnya
-            //     console.log('Kecamatan:', kecamatan);
-            //     console.log('Kota:', kota);
-            //     console.log('Provinsi:', propinsi);
-                
-            //     // Misalnya, tampilkan dalam alert (opsional)
-            //     alert("Kecamatan: " + kecamatan + "\nKota: " + kota + "\nProvinsi: " + propinsi);
-            // });
-        });
 
     </script>
 </body>
