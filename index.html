@@ -540,11 +540,18 @@
 
                     // V2
                     // Convert XML to JSON using xml-js
-                    const serializer = new XMLSerializer();
-                    const xmlToString = serializer.serializeToString(data);
-                    var result = xml2json(xmlToString, {compact: true, spaces: 2});
-                    // console.log(result);
-                    showWeatherV2(result)
+                    
+                    if (data instanceof Node) {
+                        const serializer = new XMLSerializer();
+                        const xmlToString = serializer.serializeToString(data);
+                        var result = xml2json(xmlToString, {compact: true, spaces: 2});
+                        // console.log(result);
+                        showWeatherV2(result)
+                    } else {
+                        const errno = "Parameter bukan tipe Node."
+                        console.error(errno);
+                        alert(errno);
+                    }
                 })
             .fail(function(data, status){
                     console.log(status)
