@@ -21,6 +21,12 @@
         .mt-minus-50 {
             margin-top: -50px;
         }
+        .modal.is-active {
+            pointer-events: none; /* Disable all interaction */
+        }
+        .modal-card {
+            pointer-events: auto; /* Only allow interaction within the modal-card */
+        }
     </style>
 </head>
 
@@ -86,7 +92,7 @@
                             Apa Kabar Cuaca
                         </h1>
                         <h2 class="subtitle">
-                            Ini adalah aplikasi sederhana tentang info cuaca dan gempa bumi di Indonesia. Silahkan cari info dalam bentuk nama kecamatan, kota, atau provinsi yang ada di Indonesia.
+                            Ini adalah aplikasi sederhana tentang info cuaca dan gempa bumi di Indonesia. Silahkan cari info dalam bentuk nama desa/kelurahan, kecamatan, kota/kabupaten, atau provinsi yang ada di Indonesia.
                         </h2>
                         <div class="column mt-minus-50 mb-3">
                             <a class="button is-black is-outlined" href="#" onclick="getLocation()">
@@ -105,7 +111,7 @@
                         <div class="box">
                             <div class="field is-grouped">
                                 <p class="control is-expanded">
-                                    <input id="input-search" class="input" type="text" placeholder="Cari nama desa, kecamatan, kota, atau provinsi (minimal 4 kata)">
+                                    <input id="input-search" class="input" type="text" placeholder="Cari nama kecamatan, kota, atau provinsi (minimal 4 kata)">
                                 </p>
                                 <!-- <p class="control">
                                     <a class="button is-info">
@@ -180,6 +186,19 @@
                         <!-- <button class="button is-success">Save changes</button> -->
                         <button class="button is-pulled-right" id="closeModalFooter">Cancel</button>
                     </footer>
+                </div>
+            </div>
+
+            <!-- Modal structure -->
+            <div class="modal" id="loadingModal">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <section class="modal-card-body">
+                        <!-- You can replace this with an actual loading spinner/animation -->
+                        <div class="has-text-centered">
+                        <button class="button is-loading is-large is-light">Loading</button>
+                        </div>
+                    </section>
                 </div>
             </div>
 
@@ -312,6 +331,7 @@
             var url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`;
             
             // Fetch data dari Nominatim API
+            $('#loadingModal').addClass('is-active');
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
@@ -323,6 +343,9 @@
                 .catch(error => {
                     console.error("Error:", error);
                     alert("Tidak dapat mendapatkan nama daerah.")
+                })
+                .finally(() => {
+                    $('#loadingModal').removeClass('is-active');
                 });
         }
 
@@ -373,6 +396,7 @@
 
             const csvUrl = './assets/wilayah.csv'; // URL relatif ke file CSV di folder assets
 
+            $('#loadingModal').addClass('is-active');
             fetch(csvUrl)
                 .then(response => {
                     if (!response.ok) {
@@ -384,7 +408,10 @@
                     processCSV(csvText); // Proses file CSV setelah berhasil di-fetch
                 })
                 .catch(error => {
-                    console.error('Error fetching the CSV file:', error);
+                    alert('Error fetching the CSV file:', error);
+                })
+                .finally(() => {
+                    $('#loadingModal').removeClass('is-active');
                 });
         }
 
@@ -630,6 +657,7 @@
         }
 
         function getWeather(id) {
+            $('#loadingModal').addClass('is-active');
             $.get("https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=" + id)
             .done(function(data, status, res){
                     console.log(status)
@@ -666,7 +694,10 @@
                     console.log(status)
                     console.log(data)
                     alert(status)
-                });
+                })
+            .always(function() {
+                $('#loadingModal').removeClass('is-active');
+            });
         }
 
         function showMap(item) {
