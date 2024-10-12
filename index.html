@@ -89,7 +89,7 @@
                             Ini adalah aplikasi sederhana tentang info cuaca dan gempa bumi di Indonesia. Silahkan cari info dalam bentuk nama kecamatan, kota, atau provinsi yang ada di Indonesia.
                         </h2>
                         <div class="column mt-minus-50 mb-3">
-                            <a class="button is-black is-outlined" href="#">
+                            <a class="button is-black is-outlined" href="#" onclick="getLocation()">
                                 <span class="icon">
                                     <i class="fa fa-map-marker"></i>
                                 </span>
@@ -105,7 +105,7 @@
                         <div class="box">
                             <div class="field is-grouped">
                                 <p class="control is-expanded">
-                                    <input id="input-search" class="input" type="text" placeholder="Cari nama kecamatan, kota, atau provinsi">
+                                    <input id="input-search" class="input" type="text" placeholder="Cari nama desa, kecamatan, kota, atau provinsi (minimal 4 kata)">
                                 </p>
                                 <!-- <p class="control">
                                     <a class="button is-info">
@@ -117,11 +117,11 @@
                         <div id="list-city" class="grid has-text-left">
                             <div class="cell">
                                 <div class="card"> 
-                                    <div class="card-content"> 
+                                    <!-- <div class="card-content"> 
                                         <p><span>Kecamatan:</span> ???</p> 
                                         <p><span>Kota:</span> ???</p> 
                                         <p><span>Provinsi:</span> ???</p> 
-                                    </div> 
+                                    </div>  -->
                                 </div> 
                             </div>
                             <!-- <div class="cell">
@@ -168,75 +168,6 @@
                         <!-- Konten modal -->
                         <div class="container mb-5">
                             <div id="list-card-weather" class="columns is-multiline">
-                                <!-- Cuaca Kota 1 -->
-                                <!-- <div class="column is-one-third">
-                                    <div class="card weather-card">
-                                    <div class="card-content has-text-centered">
-                                        <h3 class="title is-4">Jakarta</h3>
-                                        <figure class="image is-128x128 is-inline-block">
-                                        <img class="weather-icon" src="https://openweathermap.org/img/wn/01d@2x.png" alt="Sunny">
-                                        </figure>
-                                        <p class="temp">30°C</p>
-                                        <p class="weather-info">Cerah</p>
-                                    </div>
-                                    </div>
-                                </div> -->
-                        
-                                <!-- Cuaca Kota 2 -->
-                                <!-- <div class="column is-one-third">
-                                    <div class="card weather-card">
-                                    <div class="card-content has-text-centered">
-                                        <h3 class="title is-4">Bandung</h3>
-                                        <figure class="image is-128x128 is-inline-block">
-                                        <img class="weather-icon" src="https://openweathermap.org/img/wn/03d@2x.png" alt="Cloudy">
-                                        </figure>
-                                        <p class="temp">24°C</p>
-                                        <p class="weather-info">Berawan</p>
-                                    </div>
-                                    </div>
-                                </div> -->
-                        
-                                <!-- Cuaca Kota 3 -->
-                                <!-- <div class="column is-one-third">
-                                    <div class="card weather-card">
-                                    <div class="card-content has-text-centered">
-                                        <h3 class="title is-4">Surabaya</h3>
-                                        <figure class="image is-128x128 is-inline-block">
-                                        <img class="weather-icon" src="https://openweathermap.org/img/wn/09d@2x.png" alt="Rainy">
-                                        </figure>
-                                        <p class="temp">27°C</p>
-                                        <p class="weather-info">Hujan</p>
-                                    </div>
-                                    </div>
-                                </div> -->
-                        
-                                <!-- Cuaca Kota 4 -->
-                                <!-- <div class="column is-one-third">
-                                    <div class="card weather-card">
-                                    <div class="card-content has-text-centered">
-                                        <h3 class="title is-4">Yogyakarta</h3>
-                                        <figure class="image is-128x128 is-inline-block">
-                                        <img class="weather-icon" src="https://openweathermap.org/img/wn/02d@2x.png" alt="Partly Cloudy">
-                                        </figure>
-                                        <p class="temp">28°C</p>
-                                        <p class="weather-info">Sebagian Berawan</p>
-                                    </div>
-                                    </div>
-                                </div>
-                         -->
-                                <!-- Cuaca Kota 5 -->
-                                <!-- <div class="column is-one-third">
-                                    <div class="card weather-card">
-                                    <div class="card-content has-text-centered">
-                                        <h3 class="title is-4">Bali</h3>
-                                        <figure class="image is-128x128 is-inline-block">
-                                        <img class="weather-icon" src="https://openweathermap.org/img/wn/10d@2x.png" alt="Light Rain">
-                                        </figure>
-                                        <p class="temp">26°C</p>
-                                        <p class="weather-info">Gerimis</p>
-                                    </div>
-                                    </div>
-                                </div> -->
                             </div>
                         </div> 
                         <div class="container">
@@ -343,10 +274,11 @@
             list.forEach(e => {
                     var itemView = `
                     <div class="cell">
-                        <div class="card" style="cursor: pointer;" onclick="openModalForItem(${e.id})"> 
+                        <div class="card" style="cursor: pointer;" onclick="openModalForItem('${e.id}')"> 
                             <div class="card-content" style="text-align: center;"> 
-                                <p><span>Sub:</span> <b>${e.kecamatan}</b></p> 
-                                <p><span>Dist:</span> <b>${e.kota}</b></p> 
+                                <p style="color: brown;"><b><i>${e.name}</i></b></p> 
+                                <p><span>Kec:</span> <b>${e.kecamatan}</b></p> 
+                                <p><span>Kota:</span> <b>${e.kota}</b></p> 
                                 <p><span>Prov:</span> <b>${e.propinsi}</b></p> 
                             </div> 
                         </div> 
@@ -356,21 +288,154 @@
                 });
         }
 
+        // Fungsi untuk mendapatkan koordinat
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                document.getElementById("location").innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        // Tampilkan posisi dan lakukan reverse geocoding
+        function showPosition(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            
+            // Panggil fungsi untuk melakukan reverse geocoding
+            getCityFromCoordinates(latitude, longitude);
+        }
+
+        // Reverse geocoding dengan OpenStreetMap Nominatim
+        function getCityFromCoordinates(latitude, longitude) {
+            // URL Nominatim API untuk reverse geocoding
+            var url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`;
+            
+            // Fetch data dari Nominatim API
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    var city = data.address.city || data.address.town || data.address.village || "Tidak diketahui";
+                    console.log("Lokasi: " + city)
+                    $("#input-search").val(city)
+                    $('#input-search').trigger('input')
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("Tidak dapat mendapatkan nama daerah.")
+                });
+        }
+
+        // Menangani kesalahan jika user menolak akses lokasi
+        function showError(error) {
+            switch(error.code) {
+            case error.PERMISSION_DENIED:
+                alert("User denied the request for Geolocation.")
+                break;
+            case error.POSITION_UNAVAILABLE:
+                alert("Location information is unavailable.")
+                break;
+            case error.TIMEOUT:
+                alert("The request to get user location timed out.")
+                break;
+            case error.UNKNOWN_ERROR:
+                alert("An unknown error occurred.")
+                break;
+            }
+        }
+
         function fetchList() {
-            $.get("https://ibnux.github.io/BMKG-importer/cuaca/wilayah.json")
-            .done(function(data, status, res){
-                console.log(status)
-                console.log(data)
-                listMaster = data
-                showList(listMaster)
-            }).fail(function(data, status){
-                console.log(status)
-                console.log(data)
-                if (confirm(`Terjadi error ${status}: Gagal memuat data, silakan coba kembali...`)) {
-                    fetchList()
+            // $.get("https://ibnux.github.io/BMKG-importer/cuaca/wilayah.json")
+            // .done(function(data, status, res){
+            //     console.log(status)
+            //     console.log(data)
+            //     listMaster = data
+            //     showList(listMaster)
+            // }).fail(function(data, status){
+            //     console.log(status)
+            //     console.log(data)
+            //     if (confirm(`Terjadi error ${status}: Gagal memuat data, silakan coba kembali...`)) {
+            //         fetchList()
+            //     }
+            // });
+
+            // let csvData = `11,ACEH
+            // 11.01,KAB. ACEH SELATAN
+            // 11.01.01,Bakongan
+            // 11.01.01.2001,Keude Bakongan
+            // 11.01.01.2002,Krueng Batee
+            // 11.01.02,Kluet Selatan
+            // 11.01.02.2001,Kedai Padang
+            // 11.02,KAB. ACEH TENGGARA
+            // 11.02.01,Bambel
+            // 11.02.01.2001,Kuta Buluh
+            // `;
+
+            const csvUrl = './assets/wilayah.csv'; // URL relatif ke file CSV di folder assets
+
+            fetch(csvUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(csvText => {
+                    processCSV(csvText); // Proses file CSV setelah berhasil di-fetch
+                })
+                .catch(error => {
+                    console.error('Error fetching the CSV file:', error);
+                });
+        }
+
+        function processCSV(csvData) {
+            // Split data per baris
+            let rows = csvData.trim().split('\n');
+
+            // Proses setiap baris
+            let parsedData = rows.map(row => row.split(','));
+            // console.log(parsedData);
+
+            // Hasil untuk menyimpan data desa yang diflatkan
+            let flatDesa = [];
+
+            // Pemetaan untuk provinsi, kabupaten, dan kecamatan saat kita menemukan desa
+            let provinsi, kabupaten, kecamatan;
+
+            // Proses setiap baris data
+            parsedData.forEach(row => {
+                let code = row[0];
+                let name = row[1];
+
+                if (code.length === 2) {
+                    // Kode Provinsi, simpan untuk referensi
+                    provinsi = name;
+                } else if (code.length === 5) {
+                    // Kode Kabupaten/Kota, simpan untuk referensi
+                    kabupaten = name;
+                } else if (code.length === 8) {
+                    // Kode Kecamatan, simpan untuk referensi
+                    kecamatan = name;
+                } else if (code.length === 13) {
+                    // Kode Kelurahan/Desa, tambahkan ke flatDesa dengan provinsi, kabupaten, kecamatan
+                    flatDesa.push({
+                        // type: 'Kelurahan/Desa',
+                        id: code,
+                        name: name,
+                        propinsi: provinsi,
+                        kota: kabupaten,
+                        kecamatan: kecamatan
+                    });
                 }
             });
-        }
+
+            console.log(flatDesa);
+            // Output JSON yang hanya berisi data desa
+            // let data = JSON.stringify(flatDesa, null, 4)
+            // console.log(data);
+
+            listMaster = flatDesa
+        } 
 
         function firstSetup() {
             initListener()
@@ -385,12 +450,20 @@
                 $("#input-search").on('input', function() { 
                     var input = $(this).val()
                     console.log(input)
+                    if (input.length < 4) {
+                        $("#list-city").empty()
+                        return
+                    }
                     let filtered = listMaster.filter(function(item){
+                        // let name = item.name.toLowerCase()
                         let sub = item.kecamatan.toLowerCase()
                         let dist = item.kota.toLowerCase()
                         let prov = item.propinsi.toLowerCase()
                         let query = input.toLowerCase()
-                        return sub.includes(query) || dist.includes(query) || prov.includes(query)
+                        return sub.includes(query) 
+                        || dist.includes(query) 
+                        || prov.includes(query) 
+                        // || prov.includes(name)
                     })
                     console.log(filtered)
                     showList(filtered)
@@ -403,20 +476,6 @@
                     $('#myModal').removeClass('is-active'); // Hapus class is-active dari modal
                 });
 
-                // $('.card').on('click', function() {
-                //     // Ambil data dari elemen yang di-klik
-                //     var kecamatan = $(this).find('b').eq(0).text(); // Ambil kecamatan
-                //     var kota = $(this).find('b').eq(1).text(); // Ambil kota
-                //     var propinsi = $(this).find('b').eq(2).text(); // Ambil provinsi
-                    
-                //     // Tampilkan data di console atau bisa melakukan aksi lainnya
-                //     console.log('Kecamatan:', kecamatan);
-                //     console.log('Kota:', kota);
-                //     console.log('Provinsi:', propinsi);
-                    
-                //     // Misalnya, tampilkan dalam alert (opsional)
-                //     alert("Kecamatan: " + kecamatan + "\nKota: " + kota + "\nProvinsi: " + propinsi);
-                // });
             });
         }
 
@@ -509,29 +568,79 @@
             // Menampilkan suhu
             console.log("Temperature Values:");
             temperatureValues.each(function(index) {
-            var hour = $(this).attr('h');
-            var celsius = $(this).find('value[unit="C"]').text();
-            var fahrenheit = $(this).find('value[unit="F"]').text();
-            console.log("  Hour " + hour + ": " + celsius + "°C / " + fahrenheit + "°F");
+                var hour = $(this).attr('h');
+                var celsius = $(this).find('value[unit="C"]').text();
+                var fahrenheit = $(this).find('value[unit="F"]').text();
+                console.log("  Hour " + hour + ": " + celsius + "°C / " + fahrenheit + "°F");
             });
          }
 
         function openModalForItem(id) {
             var item = listMaster.find(item => item.id === id.toString());
-            // alert(item.kota)
+            // alert(item.name)
             console.log(item)
-            var title = `Prediksi Cuaca: ${item.kecamatan}, ${item.kota}, ${item.propinsi}`
+            var title = `Prediksi Cuaca: ${item.name}, ${item.kecamatan}, ${item.kota}`
             $("#title-modal").text(title)
 
-            getWeather()
-            showMap(item)
+            getWeather(id)
         }
 
-        function getWeather() {
-            $.get("https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/DigitalForecast-dkijakarta.xml")
+        function showWeatherV3(data) {
+            let cuaca = flatten(data[0].cuaca)
+            console.log(cuaca)
+
+            // Set locale to Indonesian
+            moment.locale('id');
+
+            cuaca.forEach(e => {
+                // Example input date string in "YYYYMMDDHHmmss" format
+                const dateStr = e.datetime;
+                const w = e.weather_desc
+                // Parse and format the date
+                const formattedDate = moment(dateStr, "YYYY-MM-DDTHH:mm:ssZ").format("ddd, D MMM YYYY, HH:mm");
+                var itemView = `
+                <div class="column is-one-third">
+                    <div class="card weather-card">
+                    <div class="card-content has-text-centered">
+                        <h4 class="title is-5">${formattedDate}</h4>
+                        <figure class="image is-128x128 is-inline-block">
+                        <img class="weather-icon" src="${e.image}" alt="Sunny">
+                        </figure>
+                        <p class="temp">${e.t}°C</p>
+                        <h4 class="weather-info"><b>${w}</b></h4>
+                    </div>
+                    </div>
+                </div>
+                `
+                $("#list-card-weather").append(itemView)
+            });
+        }
+
+        // Fungsi rekursif untuk meratakan array
+        function flatten(arr) {
+            let result = [];
+            arr.forEach(item => {
+                if (Array.isArray(item)) {
+                    result = result.concat(flatten(item)); // Rekursi jika item adalah array
+                } else {
+                    result.push(item); // Jika bukan array, tambahkan langsung ke result
+                }
+            });
+            return result;
+        }
+
+        function getWeather(id) {
+            $.get("https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=" + id)
             .done(function(data, status, res){
                     console.log(status)
                     console.log(data)
+
+                    showWeatherV3(data.data)
+                    showMap(data.lokasi)
+                    
+                    $('#myModal').addClass('is-active'); // Tambahkan class is-active ke modal
+
+                    return
 
                     // V1
                     // const timestamp = data.getElementsByTagName("timestamp")[0].textContent;
@@ -540,7 +649,7 @@
 
                     // V2
                     // Convert XML to JSON using xml-js
-                    
+
                     if (data instanceof Node) {
                         const serializer = new XMLSerializer();
                         const xmlToString = serializer.serializeToString(data);
@@ -550,7 +659,7 @@
                     } else {
                         const errno = "Parameter bukan tipe Node."
                         console.error(errno);
-                        alert(errno);
+                        // alert(errno);
                     }
                 })
             .fail(function(data, status){
@@ -573,12 +682,10 @@
             // Tambahkan beberapa marker ke dalam group
             marker.addTo(markersGroup);
 
-            marker.bindPopup(`Lokasi Koordinat: ${item.kecamatan}`)
+            marker.bindPopup(`${item.desa}, ${item.kecamatan}, ${item.kota}.`)
                 .openPopup();
 
             map.setView(marker.getLatLng(), 15);
-
-            $('#myModal').addClass('is-active'); // Tambahkan class is-active ke modal
         }
 
         function setFirstMap() {
