@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Landing - Free Bulma template</title>
-    <link rel="shortcut icon" href="images/fav_icon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="./images/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
@@ -36,8 +36,8 @@
             <nav class="navbar">
                 <div class="container">
                     <div class="navbar-brand">
-                        <a class="navbar-item" href="../">
-                            <img src="https://versions.bulma.io/0.7.4/images/bulma-logo.png" alt="Logo">
+                        <a class="navbar-item" href="./">
+                            <img src="./images/apakaca.png" alt="Logo">
                         </a>
                         <span class="navbar-burger burger" data-target="navbarMenu">
                             <span></span>
@@ -88,30 +88,32 @@
             <div class="hero-body">
                 <div class="container has-text-centered">
                     <div class="column is-6 is-offset-3">
-                        <h1 class="title">
-                            Apa Kabar Cuaca
-                        </h1>
-                        <h2 class="subtitle">
-                            Ini adalah aplikasi sederhana tentang info cuaca dan gempa bumi di Indonesia. Silahkan cari info dalam bentuk nama desa/kelurahan, kecamatan, kota/kabupaten, atau provinsi yang ada di Indonesia.
-                        </h2>
-                        <div class="column mt-minus-50 mb-3">
-                            <a class="button is-black is-outlined" href="#" onclick="getLocation()">
-                                <span class="icon">
-                                    <i class="fa fa-map-marker"></i>
-                                </span>
-                                <span>Cuaca Disini</span>
-                            </a>
-                            <a class="button is-black is-outlined" href="#">
-                                <span class="icon">
-                                    <i class="fa fa-globe"></i>
-                                </span>
-                                <span>Gempa Bumi</span>
-                            </a>
+                        <div class="box">
+                            <h1 class="title">
+                                Apa Kabar Cuaca
+                            </h1>
+                            <h2 class="subtitle">
+                                Ini adalah aplikasi sederhana tentang info cuaca dan gempa bumi di Indonesia. Silahkan cari info dalam bentuk nama desa/kelurahan, kecamatan, kota/kabupaten, atau provinsi yang ada di Indonesia.
+                            </h2>
+                            <div class="column mt-minus-50 mb-3">
+                                <a class="button is-black is-outlined" href="#" onclick="getLocation()">
+                                    <span class="icon">
+                                        <i class="fa fa-map-marker"></i>
+                                    </span>
+                                    <span>Cuaca Disini</span>
+                                </a>
+                                <a class="button is-black is-outlined" href="#">
+                                    <span class="icon">
+                                        <i class="fa fa-globe"></i>
+                                    </span>
+                                    <span>Gempa Bumi</span>
+                                </a>
+                            </div>
                         </div>
                         <div class="box">
                             <div class="field is-grouped">
                                 <p class="control is-expanded">
-                                    <input id="input-search" class="input" type="text" placeholder="Cari nama kecamatan, kota, atau provinsi (minimal 4 kata)">
+                                    <input id="input-search" class="input" type="text" placeholder="Cari nama desa, kecamatan, atau kota (minimal 4 kata)">
                                 </p>
                                 <!-- <p class="control">
                                     <a class="button is-info">
@@ -121,15 +123,15 @@
                             </div>
                         </div>
                         <div id="list-city" class="grid has-text-left">
-                            <div class="cell">
-                                <div class="card"> 
+                            <!-- <div class="cell"> -->
+                                <!-- <div class="card">  -->
                                     <!-- <div class="card-content"> 
                                         <p><span>Kecamatan:</span> ???</p> 
                                         <p><span>Kota:</span> ???</p> 
                                         <p><span>Provinsi:</span> ???</p> 
                                     </div>  -->
-                                </div> 
-                            </div>
+                                <!-- </div>  -->
+                            <!-- </div> -->
                             <!-- <div class="cell">
                                 <div class="card"> 
                                     <div class="card-content"> 
@@ -179,6 +181,16 @@
                         <div class="container">
                             <div class="row is-multiline">
                                 <div id="map" style="height: 500px;"></div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="has-text-centered mt-5">
+                                <a id="toGoogleMap" class="button is-black is-outlined is-fullwidth" href="#">
+                                    <span class="icon">
+                                        <i class="fa fa-globe"></i>
+                                    </span>
+                                    <span>Ke Google Map</span>
+                                </a>
                             </div>
                         </div>
                     </section>
@@ -323,6 +335,12 @@
             
             // Panggil fungsi untuk melakukan reverse geocoding
             getCityFromCoordinates(latitude, longitude);
+
+            // Click event to open Google Maps in a new tab
+            $('#toGoogleMap').click(function() {
+                var mapUrl = 'https://www.google.com/maps?q=' + latitude + ',' + longitude;
+                window.open(mapUrl, '_blank'); // Open the map in a new tab
+            });
         }
 
         // Reverse geocoding dengan OpenStreetMap Nominatim
@@ -482,15 +500,15 @@
                         return
                     }
                     let filtered = listMaster.filter(function(item){
-                        // let name = item.name.toLowerCase()
+                        let name = item.name.toLowerCase()
                         let sub = item.kecamatan.toLowerCase()
                         let dist = item.kota.toLowerCase()
-                        let prov = item.propinsi.toLowerCase()
+                        // let prov = item.propinsi.toLowerCase()
                         let query = input.toLowerCase()
                         return sub.includes(query) 
                         || dist.includes(query) 
-                        || prov.includes(query) 
-                        // || prov.includes(name)
+                        // || prov.includes(query) 
+                        || name.includes(query)
                     })
                     console.log(filtered)
                     showList(filtered)
