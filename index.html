@@ -102,7 +102,7 @@
                                     </span>
                                     <span>Cuaca Disini</span>
                                 </a>
-                                <a class="button is-black is-outlined" href="#">
+                                <a class="button is-black is-outlined" href="#" onclick="showEarthshake()">
                                     <span class="icon">
                                         <i class="fa fa-globe"></i>
                                     </span>
@@ -161,6 +161,34 @@
                             </div> -->
                         </div>  
                     </div>
+                </div>
+            </div>
+
+            <!-- Modal structure -->
+            <div class="modal" id="infoGempaModal">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Informasi Gempa</p>
+                    <button class="delete" aria-label="close"></button>
+                </header>
+                <section class="modal-card-body">
+                    <!-- Modal content -->
+                    <p><strong>Tanggal      :</strong> 13 Okt 2024</p>
+                    <p><strong>Jam          :</strong> 14:01:34 WIB</p>
+                    <p><strong>Coordinates  :</strong> 5.48,93.87</p>
+                    <p><strong>Lintang      :</strong> 5.48 LU</p>
+                    <p><strong>Bujur        :</strong> 93.87 BT</p>
+                    <p><strong>Magnitude    :</strong> 5.8</p>
+                    <p><strong>Kedalaman    :</strong> 10 km</p>
+                    <p><strong>Wilayah      :</strong> Pusat gempa berada di laut 161 km baratdaya Banda Aceh</p>
+                    <p><strong>Potensi      :</strong> Gempa ini dirasakan untuk diteruskan pada masyarakat</p>
+                    <p><strong>Dirasakan    :</strong> III-IV Banda Aceh, III-IV Aceh Besar, III Sabang, III Pidie, II Pidie Jaya, II Bireuen</p>
+                    <p><strong>Shakemap     :</strong> <img src="20241013140134.mmi.jpg" alt="Shakemap"></p>
+                </section>
+                <footer class="modal-card-foot">
+                    <button class="button" id="closeModalBtn">Tutup</button>
+                </footer>
                 </div>
             </div>
 
@@ -521,7 +549,15 @@
                     $('#myModal').removeClass('is-active'); // Hapus class is-active dari modal
                 });
 
+                // Close modal (clicking close button)
+                $('.delete, #closeModalBtn').click(function() {
+                    $('#infoGempaModal').removeClass('is-active');
+                });
             });
+        }
+
+        function showEarthshake() {
+            $('#infoGempaModal').addClass('is-active');
         }
 
         function showWeatherV2(textJson) {
