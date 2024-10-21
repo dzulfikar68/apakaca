@@ -27,6 +27,12 @@
         .modal-card {
             pointer-events: auto; /* Only allow interaction within the modal-card */
         }
+        #table-earthshake td {
+            padding-left: 50px;
+        }
+        th {
+            padding-bottom: 20px;
+        }
     </style>
 </head>
 
@@ -47,22 +53,6 @@
                     </div>
                     <div id="navbarMenu" class="navbar-menu">
                         <div class="navbar-end">
-                            <!-- <span class="navbar-item">
-                                <a class="button is-white is-outlined" href="#">
-                                    <span class="icon">
-                                        <i class="fa fa-home"></i>
-                                    </span>
-                                    <span>Home</span>
-                                </a>
-                            </span> -->
-                            <!-- <span class="navbar-item">
-                                <a class="button is-white is-outlined" href="#">
-                                    <span class="icon">
-                                        <i class="fa fa-superpowers"></i>
-                                    </span>
-                                    <span>Gempa Bumi</span>
-                                </a>
-                            </span> -->
                             <span class="navbar-item">
                                 <a class="button is-white is-outlined" href="#">
                                     <span class="icon">
@@ -89,7 +79,7 @@
                 <div class="container has-text-centered">
                     <div class="column is-6 is-offset-3">
                         <div class="box">
-                            <h1 class="title">
+                            <h1 class="title" style="margin-top: 25px;">
                                 Apa Kabar Cuaca
                             </h1>
                             <h2 class="subtitle">
@@ -115,50 +105,9 @@
                                 <p class="control is-expanded">
                                     <input id="input-search" class="input" type="text" placeholder="Cari nama desa, kecamatan, atau kota (minimal 4 kata)">
                                 </p>
-                                <!-- <p class="control">
-                                    <a class="button is-info">
-                                        Notify Me
-                                    </a>
-                                </p> -->
                             </div>
                         </div>
                         <div id="list-city" class="grid has-text-left">
-                            <!-- <div class="cell"> -->
-                                <!-- <div class="card">  -->
-                                    <!-- <div class="card-content"> 
-                                        <p><span>Kecamatan:</span> ???</p> 
-                                        <p><span>Kota:</span> ???</p> 
-                                        <p><span>Provinsi:</span> ???</p> 
-                                    </div>  -->
-                                <!-- </div>  -->
-                            <!-- </div> -->
-                            <!-- <div class="cell">
-                                <div class="card"> 
-                                    <div class="card-content"> 
-                                        <p><span>Kecamatan:</span> X</p> 
-                                        <p><span>Kota:</span> Y</p> 
-                                        <p><span>Provinsi:</span> Z</p> 
-                                    </div> 
-                                </div> 
-                            </div>
-                            <div class="cell">
-                                <div class="card"> 
-                                    <div class="card-content"> 
-                                        <p><span>Kecamatan:</span> X</p> 
-                                        <p><span>Kota:</span> Y</p> 
-                                        <p><span>Provinsi:</span> Z</p> 
-                                    </div> 
-                                </div> 
-                            </div>
-                            <div class="cell">
-                                <div class="card"> 
-                                    <div class="card-content"> 
-                                        <p><span>Kecamatan:</span> X</p> 
-                                        <p><span>Kota:</span> Y</p> 
-                                        <p><span>Provinsi:</span> Z</p> 
-                                    </div> 
-                                </div> 
-                            </div> -->
                         </div>  
                     </div>
                 </div>
@@ -174,17 +123,52 @@
                 </header>
                 <section class="modal-card-body">
                     <!-- Modal content -->
-                    <p><strong>Tanggal      :</strong> 13 Okt 2024</p>
-                    <p><strong>Jam          :</strong> 14:01:34 WIB</p>
-                    <p><strong>Coordinates  :</strong> 5.48,93.87</p>
-                    <p><strong>Lintang      :</strong> 5.48 LU</p>
-                    <p><strong>Bujur        :</strong> 93.87 BT</p>
-                    <p><strong>Magnitude    :</strong> 5.8</p>
-                    <p><strong>Kedalaman    :</strong> 10 km</p>
-                    <p><strong>Wilayah      :</strong> Pusat gempa berada di laut 161 km baratdaya Banda Aceh</p>
-                    <p><strong>Potensi      :</strong> Gempa ini dirasakan untuk diteruskan pada masyarakat</p>
-                    <p><strong>Dirasakan    :</strong> III-IV Banda Aceh, III-IV Aceh Besar, III Sabang, III Pidie, II Pidie Jaya, II Bireuen</p>
-                    <p><strong>Shakemap     :</strong> <img src="20241013140134.mmi.jpg" alt="Shakemap"></p>
+                    <table id="table-earthshake">
+                    <tr>
+                        <th>Tanggal</th>
+                        <td id="es-date">-</td>
+                    </tr>
+                    <tr>
+                        <th>Jam</th>
+                        <td id="es-time">-</td>
+                    </tr>
+                    <tr>
+                        <th>Coordinates</th>
+                        <td id="es-coord">-</td>
+                    </tr>
+                    <tr>
+                        <th>Lintang</th>
+                        <td id="es-lat">-</td>
+                    </tr>
+                    <tr>
+                        <th>Bujur</th>
+                        <td id="es-long">-</td>
+                    </tr>
+                    <tr>
+                        <th>Magnitude</th>
+                        <td id="es-magni">-</td>
+                    </tr>
+                    <tr>
+                        <th>Kedalaman</th>
+                        <td id="es-deep">-</td>
+                    </tr>
+                    <tr>
+                        <th>Wilayah</th>
+                        <td id="es-reg">-</td>
+                    </tr>
+                    <tr>
+                        <th>Potensi</th>
+                        <td id="es-pot">-</td>
+                    </tr>
+                    <tr>
+                        <th>Dirasakan</th>
+                        <td id="es-feel">-</td>
+                    </tr>
+                    <tr>
+                        <th>Shakemap</th>
+                        <th><img id="es-shmap" src="./images/apakaca.png" alt="Shakemap"></th>
+                    </tr>
+                    </table>
                 </section>
                 <footer class="modal-card-foot">
                     <button class="button" id="closeModalBtn">Tutup</button>
@@ -557,7 +541,36 @@
         }
 
         function showEarthshake() {
-            $('#infoGempaModal').addClass('is-active');
+            $('#loadingModal').addClass('is-active');
+            $.get("https://data.bmkg.go.id/DataMKG/TEWS/autogempa.json")
+            .done(function(data, status, res){
+                    console.log(status)
+                    console.log(data)
+
+                    // fill data
+                    var e = data.Infogempa.gempa
+                    $("#es-date").text(': ' + e.Tanggal)
+                    $("#es-time").text(': ' + e.Jam)
+                    $("#es-coord").text(': ' + e.Coordinates)
+                    $("#es-lat").text(': ' + e.Lintang)
+                    $("#es-long").text(': ' + e.Bujur)
+                    $("#es-magni").text(': ' + e.Magnitude)
+                    $("#es-deep").text(': ' + e.Kedalaman)
+                    $("#es-reg").text(': ' + e.Wilayah)
+                    $("#es-pot").text(': ' + e.Potensi)
+                    $("#es-feel").text(': ' + e.Dirasakan)
+                    $("#es-shmap").attr('src', 'https://data.bmkg.go.id/DataMKG/TEWS/' + e.Shakemap)
+                    
+                    $('#infoGempaModal').addClass('is-active');
+                })
+            .fail(function(data, status){
+                    console.log(status)
+                    console.log(data)
+                    alert(status)
+                })
+            .always(function() {
+                $('#loadingModal').removeClass('is-active');
+            });
         }
 
         function showWeatherV2(textJson) {
