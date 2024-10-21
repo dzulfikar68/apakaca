@@ -54,7 +54,7 @@
                     <div id="navbarMenu" class="navbar-menu">
                         <div class="navbar-end">
                             <span class="navbar-item">
-                                <a class="button is-white is-outlined" href="#">
+                                <a class="button is-white is-outlined" href="#" onclick="showAbout()">
                                     <span class="icon">
                                         <i class="fa fa-info-circle"></i>
                                     </span>
@@ -110,6 +110,31 @@
                         <div id="list-city" class="grid has-text-left">
                         </div>  
                     </div>
+                </div>
+            </div>
+
+            <!-- Modal about -->
+            <div class="modal" id="modalAbout">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Tentang Apakaca</p>
+                    <button class="delete" aria-label="close"></button>
+                </header>
+                <section class="modal-card-body">
+                    <p>Aplikasi cuaca dan gempa saat ini mencapai versi 1 (v.1.0), diambil langsung dari data BMKG, apabila ada saran dan kritik atau yang ingin kontribusi bisa mengakses halaman dibawah ini, semoga bermanfaat:</p>
+                    <br>
+                    <div style=" display: flex; justify-content: center;">
+                        <ul>
+                            <li><a href="https://data.bmkg.go.id/">Sumber Data Api BMKG</a></li>
+                            <li><a href="https://github.com/dzulfikar68/apakaca">Source Code Github</a></li>
+                            <li><a href="http://dzulfikar68.github.io">Tentang Author</a></li>
+                        </ul>
+                    </div>
+                </section>
+                <footer class="modal-card-foot">
+                    <button class="button" id="closeModalBtn">Tutup</button>
+                </footer>
                 </div>
             </div>
 
@@ -366,7 +391,7 @@
                 .then(response => response.json())
                 .then(data => {
                     var city = data.address.city || data.address.town || data.address.village || "Tidak diketahui";
-                    console.log("Lokasi: " + city)
+                    // console.log("Lokasi: " + city)
                     $("#input-search").val(city)
                     $('#input-search').trigger('input')
                 })
@@ -486,7 +511,7 @@
                 }
             });
 
-            console.log(flatDesa);
+            // console.log(flatDesa);
             // Output JSON yang hanya berisi data desa
             // let data = JSON.stringify(flatDesa, null, 4)
             // console.log(data);
@@ -501,12 +526,12 @@
 
         function initListener() {
             $(document).ready(function() {
-                console.log( "ready!" );
+                console.log( "welcome to apakaca!" );
                 // fetchList()
 
                 $("#input-search").on('input', function() { 
                     var input = $(this).val()
-                    console.log(input)
+                    // console.log(input)
                     if (input.length < 4) {
                         $("#list-city").empty()
                         return
@@ -522,7 +547,7 @@
                         // || prov.includes(query) 
                         || name.includes(query)
                     })
-                    console.log(filtered)
+                    // console.log(filtered)
                     showList(filtered)
                 });
 
@@ -536,16 +561,21 @@
                 // Close modal (clicking close button)
                 $('.delete, #closeModalBtn').click(function() {
                     $('#infoGempaModal').removeClass('is-active');
+                    $('#modalAbout').removeClass('is-active');
                 });
             });
+        }
+
+        function showAbout() {
+            $('#modalAbout').addClass('is-active');
         }
 
         function showEarthshake() {
             $('#loadingModal').addClass('is-active');
             $.get("https://data.bmkg.go.id/DataMKG/TEWS/autogempa.json")
             .done(function(data, status, res){
-                    console.log(status)
-                    console.log(data)
+                    // console.log(status)
+                    // console.log(data)
 
                     // fill data
                     var e = data.Infogempa.gempa
@@ -564,8 +594,8 @@
                     $('#infoGempaModal').addClass('is-active');
                 })
             .fail(function(data, status){
-                    console.log(status)
-                    console.log(data)
+                    // console.log(status)
+                    // console.log(data)
                     alert(status)
                 })
             .always(function() {
@@ -579,8 +609,8 @@
             var jsonData = JSON.parse(textJson)
             var area = jsonData.data.forecast.area
             var city = area.find(e => e._attributes.id == '501195')
-            console.log(area)
-            console.log(city)
+            // console.log(area)
+            // console.log(city)
             var weather = city.parameter.find(e => e._attributes.id == "weather").timerange.map(e => 
                 {
                     return {
@@ -598,14 +628,14 @@
                     }
                 }
             )
-            console.log(weather)
-            console.log(temp)
+            // console.log(weather)
+            // console.log(temp)
 
             // Merging both arrays
             const mergedList = weather.map((item, index) => {
                 return { ...item, ...temp[index] };
             });
-            console.log(mergedList)
+            // console.log(mergedList)
 
             // Set locale to Indonesian
             moment.locale('id');
@@ -648,31 +678,31 @@
             var temperatureValues = $xml.find('parameter[id="t"] timerange');
 
             // Menampilkan data yang diambil
-            console.log("Timestamp: " + timestamp);
-            console.log("Area Description: " + areaDescription);
+            // console.log("Timestamp: " + timestamp);
+            // console.log("Area Description: " + areaDescription);
 
             // Menampilkan kelembapan
-            console.log("Humidity Values:");
+            // console.log("Humidity Values:");
             humidityValues.each(function(index) {
             var hour = $(this).parent().attr('h');
             var value = $(this).text();
-            console.log("  Hour " + hour + ": " + value + "%");
+            // console.log("  Hour " + hour + ": " + value + "%");
             });
 
             // Menampilkan suhu
-            console.log("Temperature Values:");
+            // console.log("Temperature Values:");
             temperatureValues.each(function(index) {
                 var hour = $(this).attr('h');
                 var celsius = $(this).find('value[unit="C"]').text();
                 var fahrenheit = $(this).find('value[unit="F"]').text();
-                console.log("  Hour " + hour + ": " + celsius + "°C / " + fahrenheit + "°F");
+                // console.log("  Hour " + hour + ": " + celsius + "°C / " + fahrenheit + "°F");
             });
          }
 
         function openModalForItem(id) {
             var item = listMaster.find(item => item.id === id.toString());
             // alert(item.name)
-            console.log(item)
+            // console.log(item)
             var title = `Prediksi Cuaca: ${item.name}, ${item.kecamatan}, ${item.kota}`
             $("#title-modal").text(title)
 
@@ -681,7 +711,7 @@
 
         function showWeatherV3(data) {
             let cuaca = flatten(data[0].cuaca)
-            console.log(cuaca)
+            // console.log(cuaca)
 
             // Set locale to Indonesian
             moment.locale('id');
@@ -727,8 +757,8 @@
             $('#loadingModal').addClass('is-active');
             $.get("https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=" + id)
             .done(function(data, status, res){
-                    console.log(status)
-                    console.log(data)
+                    // console.log(status)
+                    // console.log(data)
 
                     showWeatherV3(data.data)
                     showMap(data.lokasi)
@@ -758,8 +788,8 @@
                     }
                 })
             .fail(function(data, status){
-                    console.log(status)
-                    console.log(data)
+                    // console.log(status)
+                    // console.log(data)
                     alert(status)
                 })
             .always(function() {
