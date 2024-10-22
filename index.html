@@ -29,9 +29,16 @@
         }
         #table-earthshake td {
             padding-left: 50px;
+            color: white;
         }
         th {
             padding-bottom: 20px;
+        }
+        p {
+            color: white;
+        }
+        a {
+            color: aqua;
         }
         /* input::placeholder, 
         textarea::placeholder {
@@ -83,21 +90,21 @@
             <div class="hero-body">
                 <div class="container has-text-centered">
                     <div class="column is-6 is-offset-3">
-                        <div class="box has-background-light">
-                            <h1 class="title" style="margin-top: 25px;">
+                        <div class="box has-background-grey">
+                            <h1 class="title" style="margin-top: 25px; color: aqua;">
                                 Apa Kabar Cuaca
                             </h1>
-                            <h2 class="subtitle">
+                            <h2 class="subtitle" style="color: white;">
                                 Ini adalah aplikasi sederhana tentang info cuaca dan gempa bumi di Indonesia. Silahkan cari info dalam bentuk nama desa/kelurahan, kecamatan, kota/kabupaten, atau provinsi yang ada di Indonesia.
                             </h2>
                             <div class="column mt-minus-50 mb-3">
-                                <a class="button is-black is-outlined" href="#" onclick="getLocation()">
+                                <a class="button is-white is-outlined" href="#" onclick="getLocation()">
                                     <span class="icon">
                                         <i class="fa fa-map-marker"></i>
                                     </span>
                                     <span>Cuaca Disini</span>
                                 </a>
-                                <a class="button is-black is-outlined" href="#" onclick="showEarthshake()">
+                                <a class="button is-white is-outlined" href="#" onclick="showEarthshake()">
                                     <span class="icon">
                                         <i class="fa fa-globe"></i>
                                     </span>
@@ -105,7 +112,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="box has-background-light">
+                        <div class="box has-background-grey">
                             <div class="field is-grouped">
                                 <p class="control is-expanded">
                                     <input id="input-search" class="input" type="text" placeholder="Cari nama desa, kecamatan, atau kota (minimal 4 kata)">
@@ -119,14 +126,14 @@
             </div>
 
             <!-- Modal about -->
-            <div class="modal has-background-light" id="modalAbout">
+            <div class="modal" id="modalAbout">
                 <div class="modal-background"></div>
                 <div class="modal-card">
-                <header class="modal-card-head">
+                <header class="modal-card-head has-background-grey">
                     <p class="modal-card-title">Tentang Apakaca</p>
                     <button class="delete" aria-label="close"></button>
                 </header>
-                <section class="modal-card-body">
+                <section class="modal-card-body has-background-grey">
                     <p>Aplikasi cuaca dan gempa saat ini mencapai versi 1 (v.1.0), diambil langsung dari data BMKG, apabila ada saran dan kritik atau yang ingin kontribusi bisa mengakses halaman dibawah ini, semoga bermanfaat:</p>
                     <br>
                     <div style=" display: flex; justify-content: center;">
@@ -137,21 +144,21 @@
                         </ul>
                     </div>
                 </section>
-                <footer class="modal-card-foot">
+                <footer class="modal-card-foot has-background-grey">
                     <button class="button" id="closeModalBtn">Tutup</button>
                 </footer>
                 </div>
             </div>
 
             <!-- Modal structure -->
-            <div class="modal has-background-light" id="infoGempaModal">
+            <div class="modal" id="infoGempaModal">
                 <div class="modal-background"></div>
                 <div class="modal-card">
-                <header class="modal-card-head">
+                <header class="modal-card-head has-background-grey">
                     <p class="modal-card-title">Informasi Gempa</p>
                     <button class="delete" aria-label="close"></button>
                 </header>
-                <section class="modal-card-body">
+                <section class="modal-card-body has-background-grey">
                     <!-- Modal content -->
                     <table id="table-earthshake">
                     <tr>
@@ -200,21 +207,21 @@
                     </tr>
                     </table>
                 </section>
-                <footer class="modal-card-foot">
+                <footer class="modal-card-foot has-background-grey">
                     <button class="button" id="closeModalBtn">Tutup</button>
                 </footer>
                 </div>
             </div>
 
             <!-- Modal -->
-            <div class="modal has-background-light" id="myModal">
+            <div class="modal" id="myModal">
                 <div class="modal-background"></div>
                 <div class="modal-card">
-                    <header class="modal-card-head">
+                    <header class="modal-card-head has-background-grey">
                         <p id="title-modal" class="modal-card-title">Modal Title</p>
                         <!-- <button class="delete" aria-label="close" id="closeModal"></button> -->
                     </header>
-                    <section class="modal-card-body">
+                    <section class="modal-card-body has-background-grey">
                         <!-- Konten modal -->
                         <div class="container mb-5">
                             <div id="list-card-weather" class="columns is-multiline">
@@ -227,7 +234,7 @@
                         </div>
                         <div class="container">
                             <div class="has-text-centered mt-5">
-                                <a id="toGoogleMap" class="button is-black is-outlined is-fullwidth" href="#">
+                                <a id="toGoogleMap" class="button is-white is-outlined is-fullwidth" href="#">
                                     <span class="icon">
                                         <i class="fa fa-globe"></i>
                                     </span>
@@ -236,7 +243,7 @@
                             </div>
                         </div>
                     </section>
-                    <footer class="modal-card-foot">
+                    <footer class="modal-card-foot has-background-grey">
                         <!-- <button class="button is-success">Save changes</button> -->
                         <button class="button is-pulled-right" id="closeModalFooter">Cancel</button>
                     </footer>
@@ -347,7 +354,7 @@
             list.forEach(e => {
                     var itemView = `
                     <div class="cell">
-                        <div class="card" style="cursor: pointer;" onclick="openModalForItem('${e.id}')"> 
+                        <div class="card has-background-black" style="cursor: pointer;" onclick="openModalForItem('${e.id}')"> 
                             <div class="card-content" style="text-align: center;"> 
                                 <p style="color: brown;"><b><i>${e.name}</i></b></p> 
                                 <p><span>Kec:</span> <b>${e.kecamatan}</b></p> 
@@ -653,9 +660,9 @@
                     const formattedDate = moment(dateStr, "YYYYMMDDHHmmss").format("ddd, D MMM YYYY HH:mm");
                     var itemView = `
                     <div class="column is-one-third">
-                        <div class="card weather-card">
+                        <div class="card weather-card has-background-black">
                         <div class="card-content has-text-centered">
-                            <h4 class="title is-5">${formattedDate}</h4>
+                            <h4 class="title is-5" style="color: red;">${formattedDate}</h4>
                             <figure class="image is-128x128 is-inline-block">
                             <img class="weather-icon" src="https://ibnux.github.io/BMKG-importer/icon/${e.weather}.png" alt="Sunny">
                             </figure>
@@ -729,9 +736,9 @@
                 const formattedDate = moment(dateStr, "YYYY-MM-DDTHH:mm:ssZ").format("ddd, D MMM YYYY, HH:mm");
                 var itemView = `
                 <div class="column is-one-third">
-                    <div class="card weather-card">
+                    <div class="card weather-card has-background-black">
                     <div class="card-content has-text-centered">
-                        <h4 class="title is-5">${formattedDate}</h4>
+                        <h4 class="title is-5" style="color: red;">${formattedDate}</h4>
                         <figure class="image is-128x128 is-inline-block">
                         <img class="weather-icon" src="${e.image}" alt="Sunny">
                         </figure>
