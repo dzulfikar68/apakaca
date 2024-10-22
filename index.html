@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Landing - Free Bulma template</title>
+    <title>Apakaca - Aplikasi Cuaca dan Gempa</title>
     <link rel="shortcut icon" href="./images/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
@@ -354,9 +354,9 @@
             list.forEach(e => {
                     var itemView = `
                     <div class="cell">
-                        <div class="card has-background-black" style="cursor: pointer;" onclick="openModalForItem('${e.id}')"> 
+                        <div class="card has-background-grey" style="cursor: pointer;" onclick="openModalForItem('${e.id}')"> 
                             <div class="card-content" style="text-align: center;"> 
-                                <p style="color: brown;"><b><i>${e.name}</i></b></p> 
+                                <p style="color: aqua;"><b><i>${e.name}</i></b></p> 
                                 <p><span>Kec:</span> <b>${e.kecamatan}</b></p> 
                                 <p><span>Kota:</span> <b>${e.kota}</b></p> 
                                 <p><span>Prov:</span> <b>${e.propinsi}</b></p> 
@@ -662,7 +662,7 @@
                     <div class="column is-one-third">
                         <div class="card weather-card has-background-black">
                         <div class="card-content has-text-centered">
-                            <h4 class="title is-5" style="color: red;">${formattedDate}</h4>
+                            <h4 class="title is-5" style="color: aqua;">${formattedDate}</h4>
                             <figure class="image is-128x128 is-inline-block">
                             <img class="weather-icon" src="https://ibnux.github.io/BMKG-importer/icon/${e.weather}.png" alt="Sunny">
                             </figure>
@@ -738,7 +738,7 @@
                 <div class="column is-one-third">
                     <div class="card weather-card has-background-black">
                     <div class="card-content has-text-centered">
-                        <h4 class="title is-5" style="color: red;">${formattedDate}</h4>
+                        <h4 class="title is-5" style="color: aqua;">${formattedDate}</h4>
                         <figure class="image is-128x128 is-inline-block">
                         <img class="weather-icon" src="${e.image}" alt="Sunny">
                         </figure>
