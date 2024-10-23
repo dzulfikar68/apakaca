@@ -214,6 +214,12 @@
                         <th><img id="es-shmap" src="./images/apakaca.png" alt="Shakemap"></th>
                     </tr>
                     </table>
+                    <a id="esGoToGmap" class="button is-black is-outlined is-fullwidth" href="#">
+                        <span class="icon">
+                            <i class="fa fa-globe"></i>
+                        </span>
+                        <span>Ke Google Map</span>
+                    </a>
                 </section>
                 <footer class="modal-card-foot has-background-grey">
                     <button class="button" id="closeModalBtn">Tutup</button>
@@ -610,6 +616,13 @@
                     $("#es-pot").text(': ' + e.Potensi)
                     $("#es-feel").text(': ' + e.Dirasakan)
                     $("#es-shmap").attr('src', 'https://data.bmkg.go.id/DataMKG/TEWS/' + e.Shakemap)
+
+                    // Click event to open Google Maps in a new tab
+                    $('#esGoToGmap').click(function() {
+                        var point = e.Coordinates.split(",")
+                        var mapUrl = 'https://www.google.com/maps?q=' + point[0] + ',' + point[1];
+                        window.open(mapUrl, '_blank'); // Open the map in a new tab
+                    });
                     
                     $('#infoGempaModal').addClass('is-active');
                 })
